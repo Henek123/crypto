@@ -1,0 +1,49 @@
+.crypto-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 30px;
+    background-color: aquamarine;
+    height: 8vh;
+}
+main{
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.graph-box{
+    background-color: aqua;
+    height: 89vh;
+    width: 80%;
+    margin: auto;
+}
+.graph{
+    background-color: beige;
+    height: 88%;
+    width: 100%;
+}
+.graph-btns{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+}
+.btn{
+    font-weight: 400;
+    background-color: white;
+    font-family: 'Times New Roman', Times, serif;
+    border: solid 2px grey;
+    padding: 0.25em 0.75em 0.25em 0.75em;
+    border-radius: 15px;
+    font-size: 25px;
+    margin: 0.5em 0.5em auto 0.5em;
+}
+.btn:hover{
+    color: white;
+    background-color: gray;
+    cursor: pointer;
+}
+.info-box{
+    width: 20%;
+    background-color: blueviolet;
+}
