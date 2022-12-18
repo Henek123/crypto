@@ -23,19 +23,24 @@ const filter = async function(i){
   }
   console.log(arr);
   document.querySelector(".graph").innerHTML = "";
+  //reding dimensions of container
+  let graph = document.querySelector(".graph");
+  let width = graph.offsetWidth;
+  let height = graph.offsetHeight;
 
   //adding svg to container
   d3.select(".graph")
     .append("svg")
+    .attr("width", width)
+    .attr("height", height)
 
   //setting x scale
   const scaleX = d3.scaleTime()
     .domain(d3.extent(arr, (d) => d[0]))
-    .range([50, 700])
-    .nice();
+.range([50, width * 0.9])
   d3.select("svg")
     .append("g")
-    .attr("transform", "translate(0, 425)")
+    .attr("transform", `translate(0, ${height - 25})`)
     .call(d3.axisBottom(scaleX))
   d3.axisBottom()
 
@@ -43,10 +48,10 @@ const filter = async function(i){
   const scaleY = d3
     .scaleLinear()
     .domain([
-      d3.min(arr, (d) => d[1] - d[1]),
-      d3.max(arr, (d) => d[1]),
+      d3.min(arr, (d) => d[1] - d[1] * 0.2),
+      d3.max(arr, (d) => parseInt(d[1]) * 1.05),
     ])
-    .range([425, 50]);
+    .range([height - 25, 25]);
   d3.select("svg")
     .append("g")
     .attr("transform", "translate(50, 0)")
@@ -67,9 +72,9 @@ const filter = async function(i){
     );
 
   //setting aspect ration
-  d3.select("svg")
-    .attr("viewBox", "0 0 760 450")
-    .attr("preserveAspectRatio", "xMidYMid meet")
+  // d3.select("svg")
+  //   .attr("viewBox", "0 0 760 450")
+  //   .attr("preserveAspectRatio", "xMidYMid meet")
 }
 
 //adding listeners
