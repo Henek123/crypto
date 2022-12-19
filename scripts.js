@@ -3,7 +3,7 @@ let data = []
 let crypto = "BTC"
 //let i = 180;
 
-//calling API and setting name
+//calling API
 const callAPI = async function(crypto) {
   let url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${crypto}&market=USD&apikey=KIPI8OWFYIA80UQX`;
   try {
@@ -16,22 +16,28 @@ const callAPI = async function(crypto) {
 //setting info
 const info = async function(crypto){
   await drawChart("180");
+  const img = document.getElementById("logo");
   const name = document.getElementById("name");
   switch(crypto){
     case "BTC":
       name.textContent = " BitCoin";
+      img.src = "/img/btc.webp"
       break;
     case "ETH":
       name.textContent = " Ethereum";
+      img.src = "/img/eth.svg"
       break;
     case "DOGE":
       name.textContent = " DogeCoin";
+      img.src = "/img/doge.png"
       break;
     case "LUNA":
       name.textContent = " Terra";
+      img.src = "/img/luna.webp"
       break;
     case "DOT":
       name.textContent = " PolkaDot";
+      img.src = "/img/polka.png"
       break;
   }
 }

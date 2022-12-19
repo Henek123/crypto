@@ -1,11 +1,11 @@
 .crypto-bar{
+    justify-content: center;  
     display: flex;
     flex-direction: row;
     font-size: 30px;
     height: 8vh;
 }
 main{
-    margin: auto;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -14,8 +14,7 @@ main{
 }
 .graph-box{
     height: 89vh;
-    width: 80%;
-    margin: auto;
+    width: 85%;
 }
 .graph{
     height: 88%;
@@ -25,6 +24,8 @@ main{
     display: flex;
     flex-direction: row-reverse;
     justify-content: left;
+    margin-top: 1em;
+    margin-left: 3em;
 }
 .btn{
     font-weight: 400;
@@ -42,24 +43,34 @@ main{
     cursor: pointer;
 }
 .info-box{
+    width: 100%;
     min-width: 200px;
-    width: 20%;
     border: 1px solid grey;
     border-radius: 15px;
-    height: 21em;
+    height: 20em;
     font-size:22px;
     margin: 10px;
+    padding-right: 15px;
 }
-span{
-    float: right;
-    margin-right: 1em;
+.value{
+    margin-left: 1em;
     font-weight: 600;
 }
-.info:not(:last-of-type){
+.value{
     border-bottom: 1px solid black;
-    padding-bottom: 2em;;
+    padding-bottom: 5px;
 }
 .info{
-    padding-top: 1em;
+    margin-top: 1em;
     margin-left: 1em;
+}
+img{
+    width: 200px;
+    height: 200px;
+}
+.right-bar{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
