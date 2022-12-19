@@ -21,23 +21,23 @@ const info = async function(crypto){
   switch(crypto){
     case "BTC":
       name.textContent = " BitCoin";
-      img.src = "/img/btc.webp"
+      img.src = "./img/btc.webp"
       break;
     case "ETH":
       name.textContent = " Ethereum";
-      img.src = "/img/eth.svg"
+      img.src = "./img/eth.svg"
       break;
     case "DOGE":
       name.textContent = " DogeCoin";
-      img.src = "/img/doge.png"
+      img.src = "./img/doge.png"
       break;
     case "LUNA":
       name.textContent = " Terra";
-      img.src = "/img/luna.webp"
+      img.src = "./img/luna.webp"
       break;
     case "DOT":
       name.textContent = " PolkaDot";
-      img.src = "/img/polka.png"
+      img.src = "./img/polka.png"
       break;
   }
 }
