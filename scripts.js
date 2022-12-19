@@ -95,7 +95,8 @@ const drawChart = async function(i){
 .range([50, width * 0.9])
   d3.select("svg")
     .append("g")
-    .attr("transform", `translate(0, ${height - 25})`)
+    .attr("transform", `translate(10, ${height - 25})`)
+    .style("font", "16px times")
     .call(d3.axisBottom(scaleX))
   d3.axisBottom()
 
@@ -109,7 +110,8 @@ const drawChart = async function(i){
     .range([height - 25, 25]);
   d3.select("svg")
     .append("g")
-    .attr("transform", "translate(50, 0)")
+    .attr("transform", "translate(60, 0)")
+    .style("font", "16px times")
     .call(d3.axisLeft(scaleY));
 
   //drawing line
@@ -124,7 +126,8 @@ const drawChart = async function(i){
       d3.line()
         .x((d) => scaleX(d[0]))
         .y((d) => scaleY(d[1]))
-    );
+    )
+    .attr("transform", "translate(10, 0)");
 }
 
 
