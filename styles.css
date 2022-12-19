@@ -47,3 +47,10 @@ main{
     width: 20%;
     background-color: blueviolet;
 }
+span{
+    float: right;
+    margin-right: 1em;
+}
+.info{
+    margin-left: 1em;
+}

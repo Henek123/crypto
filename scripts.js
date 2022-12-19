@@ -1,7 +1,11 @@
+//setting starting parameters
 let data = []
 let crypto = "BTC"
-const callAPI = async function(symbol) {
-  let url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&market=USD&apikey=KIPI8OWFYIA80UQX`;
+//let i = 180;
+
+//calling API and setting name
+const callAPI = async function(crypto) {
+  let url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${crypto}&market=USD&apikey=KIPI8OWFYIA80UQX`;
   try {
       let res = await fetch(url);
       return await res.json();
@@ -9,11 +13,36 @@ const callAPI = async function(symbol) {
       console.log(error);
   }
 }
+//setting info
+const info = async function(crypto){
+  await drawChart("180");
+  const name = document.getElementById("name");
+  switch(crypto){
+    case "BTC":
+      name.textContent = " BitCoin";
+      break;
+    case "ETH":
+      name.textContent = " Ethereum";
+      break;
+    case "DOGE":
+      name.textContent = " DogeCoin";
+      break;
+    case "LUNA":
+      name.textContent = " Terra";
+      break;
+    case "DOT":
+      name.textContent = " PolkaDot";
+      break;
+  }
+}
+
+//filtering data
 const filter = async function(i){
+  //checking for data in array
   if(data.length < 1){
     data = [await callAPI(crypto)]
   }
-  console.log(data);
+  //filtering array
   let arr = [];
   for (let key in data[0]["Time Series (Digital Currency Daily)"]) {
     if(i < 1) break;
@@ -21,8 +50,33 @@ const filter = async function(i){
     arr.push([myDate, data[0]["Time Series (Digital Currency Daily)"][`${key}`]["1a. open (USD)"],]);
     i--;
   }
-  console.log(arr);
+  return arr;
+}
+
+//setting info values
+const setValues = async function(i){
+  let arr = await filter(i);
   document.querySelector(".graph").innerHTML = "";
+  //reading and setting info
+  let max = -1 / 0;
+  let min = 1 / 0;
+  for (let i = 0; i < arr.length; i++){
+    let temp = +arr[i][1];
+    if(temp > max) max = temp;
+    if(temp < min) min = temp;
+  }
+  document.getElementById("high-value").textContent =  max + " USD";
+  document.getElementById("low-value").textContent =  min + " USD";
+  document.getElementById("diffrence").textContent = Math.round(((arr[0][1]- arr[arr.length - 1][1])/ arr[0][1])* 10000) / 100 + "%";
+  return [arr, min, max];
+}
+
+//drawing chart
+const drawChart = async function(i){
+  let array = await setValues(i);
+  let arr = array[0];
+  let min = array[1];
+  let max = array[2];
   //reding dimensions of container
   let graph = document.querySelector(".graph");
   let width = graph.offsetWidth;
@@ -31,8 +85,9 @@ const filter = async function(i){
   //adding svg to container
   d3.select(".graph")
     .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .classed("svg-content-responsive", true)
 
   //setting x scale
   const scaleX = d3.scaleTime()
@@ -48,8 +103,8 @@ const filter = async function(i){
   const scaleY = d3
     .scaleLinear()
     .domain([
-      d3.min(arr, (d) => d[1] - d[1] * 0.2),
-      d3.max(arr, (d) => parseInt(d[1]) * 1.05),
+      min * 0.95,
+      max * 1.05
     ])
     .range([height - 25, 25]);
   d3.select("svg")
@@ -70,44 +125,39 @@ const filter = async function(i){
         .x((d) => scaleX(d[0]))
         .y((d) => scaleY(d[1]))
     );
-
-  //setting aspect ration
-  // d3.select("svg")
-  //   .attr("viewBox", "0 0 760 450")
-  //   .attr("preserveAspectRatio", "xMidYMid meet")
 }
 
-//adding listeners
-document.addEventListener("DOMContentLoaded", () => filter(180));
 
-document.getElementById("5day-btn").addEventListener("click", () => filter(5));
-document.getElementById("30day-btn").addEventListener("click", () => filter(30));
-document.getElementById("6month-btn").addEventListener("click", () => filter(180));
-document.getElementById("1year-btn").addEventListener("click", () => filter(365));
-document.getElementById("2year-btn").addEventListener("click", () => filter(730));
+//adding listeners
+document.addEventListener("DOMContentLoaded", () => info(crypto));
+document.getElementById("5day-btn").addEventListener("click", () => drawChart(5));
+document.getElementById("30day-btn").addEventListener("click", () => drawChart(30));
+document.getElementById("6month-btn").addEventListener("click", () => drawChart(180));
+document.getElementById("1year-btn").addEventListener("click", () => drawChart(365));
+document.getElementById("2year-btn").addEventListener("click", () => drawChart(730));
 
 document.getElementById("btc").addEventListener("click", () => {
   crypto = "BTC";
   data = [];
-  filter(30);
+  info(crypto);
 })
 document.getElementById("eth").addEventListener("click", () => {
   crypto = "ETH";
   data = [];
-  filter(30);
+  info(crypto);
 })
 document.getElementById("doge").addEventListener("click", () => {
   crypto = "DOGE";
   data = [];
-  filter(30);
+  info(crypto);
 })
 document.getElementById("terra").addEventListener("click", () => {
   crypto = "LUNA";
   data = [];
-  filter(30);
+  info(crypto);
 })
 document.getElementById("polka").addEventListener("click", () => {
   crypto = "DOT";
   data = [];
-  filter(30);
+  info(crypto);
 })
