@@ -209,8 +209,8 @@ eth.addEventListener("click", () => {
 const xrp = document.getElementById("xrp");
 xrp.addEventListener("click", () => {
   prevCrypto.classList.remove("active");
-  btc.classList.add("active");
-  prevCrypto = btc;
+  xrp.classList.add("active");
+  prevCrypto = xrp;
   crypto = "XRP";
   data = [];
   info(crypto);
