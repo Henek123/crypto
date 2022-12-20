@@ -1,7 +1,6 @@
 //setting starting parameters
 let data = []
 let crypto = "BTC"
-//let i = 180;
 
 //calling API
 const callAPI = async function(crypto) {
@@ -14,19 +13,17 @@ const callAPI = async function(crypto) {
   }
 }
 //setting info
-const info = async function(crypto){
-  await drawChart("180");
+const info = async function(crypto, i){
+  await drawChart(i);
   const img = document.getElementById("logo");
   const name = document.getElementById("name");
   switch(crypto){
     case "BTC":
       name.textContent = " BitCoin";
       img.src = "./img/btc.webp"
-      img.src = "./img/btc.webp"
       break;
     case "ETH":
       name.textContent = " Ethereum";
-      img.src = "./img/eth.svg"
       img.src = "./img/eth.svg"
       break;
     case "XRP":
@@ -36,11 +33,9 @@ const info = async function(crypto){
     case "LUNA":
       name.textContent = " Terra";
       img.src = "./img/luna.webp"
-      img.src = "./img/luna.webp"
       break;
     case "DOT":
       name.textContent = " PolkaDot";
-      img.src = "./img/polka.png"
       img.src = "./img/polka.png"
       break;
   }
@@ -148,90 +143,88 @@ const drawChart = async function(i){
 document.addEventListener("DOMContentLoaded", () => info(crypto));
 const btn5 = document.getElementById("5day-btn");
 btn5.addEventListener("click", () => {
-  prevRange.classList.remove("active");
-  btn5.classList.add("active");
-  prevRange = btn5;
+  activeRange(btn5);
+  i = 5;
   drawChart(5)
 });
 
 const btn30 = document.getElementById("30day-btn")
 btn30.addEventListener("click", () => {
-  prevRange.classList.remove("active");
-  btn30.classList.add("active");
-  prevRange = btn30
+  activeRange(btn30);
+  i = 30;
   drawChart(30)
 });
 
 const btn180 = document.getElementById("6month-btn")
 btn180.addEventListener("click", () => {
-  prevRange.classList.remove("active");
-  btn180.classList.add("active");
-  prevRange = btn180;
+  activeRange(btn180);
+  i = 180;
   drawChart(180)
 });
 
 const btn365 = document.getElementById("1year-btn")
 btn365.addEventListener("click", () => {
-  prevRange.classList.remove("active");
-  btn365.classList.add("active");
-  prevRange = btn365;
+  activeRange(btn365);
+  i = 365;
   drawChart(365)
 });
 
 const btn730 = document.getElementById("2year-btn")
 btn730.addEventListener("click", () => {
-  prevRange.classList.remove("active");
-  btn730.classList.add("active");
-  prevRange = btn730;
+  activeRange(btn730);
+  i = 730;
   drawChart(730)
 });
+//changing the active button
+i = 180;
 let prevRange = btn180;
 prevRange.classList.add("active");
+const activeRange = function(button){
+  prevRange.classList.remove("active");
+  button.classList.add("active");
+  prevRange = button;
+  return prevRange;
+}
 
 const btc = document.getElementById("btc");
 btc.addEventListener("click", () => {
-  prevCrypto.classList.remove("active");
-  btc.classList.add("active");
-  prevCrypto = btc;
+  activeCrypto(btc);
   crypto = "BTC";
   data = [];
-  info(crypto);
+  info(crypto, i);
 });
 const eth = document.getElementById("eth");
 eth.addEventListener("click", () => {
-  prevCrypto.classList.remove("active");
-  eth.classList.add("active");
-  prevCrypto = eth;
+  activeCrypto(eth);
   crypto = "ETH";
   data = [];
-  info(crypto);
+  info(crypto, i);
 });
 const xrp = document.getElementById("xrp");
 xrp.addEventListener("click", () => {
-  prevCrypto.classList.remove("active");
-  xrp.classList.add("active");
-  prevCrypto = xrp;
+  activeCrypto(xrp);
   crypto = "XRP";
   data = [];
-  info(crypto);
+  info(crypto, i);
 });
 const terra = document.getElementById("terra");
 terra.addEventListener("click", () => {
-  prevCrypto.classList.remove("active");
-  terra.classList.add("active");
-  prevCrypto = terra;
+  activeCrypto(terra);
   crypto = "LUNA";
   data = [];
-  info(crypto);
+  info(crypto, i);
 });
 const polka = document.getElementById("polka");
 polka.addEventListener("click", () => {
-  prevCrypto.classList.remove("active");
-  polka.classList.add("active");
-  prevCrypto = polka;
+  activeCrypto(polka);
   crypto = "DOT";
   data = [];
-  info(crypto);
+  info(crypto, i);
 });
 let prevCrypto = btc;
 btc.classList.add("active");
+const activeCrypto = function(button){
+  prevCrypto.classList.remove("active");
+  button.classList.add("active");
+  prevCrypto = button;
+}
