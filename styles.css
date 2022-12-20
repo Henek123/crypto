@@ -37,7 +37,7 @@ main{
     font-size: 25px;
     margin: 0.5em 0.5em auto 0.5em;
 }
-.btn:hover{
+.active, .btn:hover{
     color: white;
     background-color: gray;
     cursor: pointer;

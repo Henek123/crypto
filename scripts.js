@@ -21,23 +21,23 @@ const info = async function(crypto){
   switch(crypto){
     case "BTC":
       name.textContent = " BitCoin";
-      img.src = "/img/btc.webp"
+      img.src = "./img/btc.webp"
       break;
     case "ETH":
       name.textContent = " Ethereum";
-      img.src = "/img/eth.svg"
+      img.src = "./img/eth.svg"
       break;
-    case "DOGE":
-      name.textContent = " DogeCoin";
-      img.src = "/img/doge.png"
+    case "XRP":
+      name.textContent = " XRP";
+      img.src = "./img/xrp.png"
       break;
     case "LUNA":
       name.textContent = " Terra";
-      img.src = "/img/luna.webp"
+      img.src = "./img/luna.webp"
       break;
     case "DOT":
       name.textContent = " PolkaDot";
-      img.src = "/img/polka.png"
+      img.src = "./img/polka.png"
       break;
   }
 }
@@ -114,11 +114,14 @@ const drawChart = async function(i){
       max * 1.05
     ])
     .range([height - 25, 25]);
+  const yAxis = d3.axisLeft(scaleY)
+    .tickSize(-width * 0.95);
   d3.select("svg")
     .append("g")
     .attr("transform", "translate(60, 0)")
     .style("font", "16px times")
-    .call(d3.axisLeft(scaleY));
+    .call(yAxis)
+    .selectAll('.tick line').attr('opacity', 0.25);
 
   //drawing line
   d3.select("svg")
@@ -139,34 +142,92 @@ const drawChart = async function(i){
 
 //adding listeners
 document.addEventListener("DOMContentLoaded", () => info(crypto));
-document.getElementById("5day-btn").addEventListener("click", () => drawChart(5));
-document.getElementById("30day-btn").addEventListener("click", () => drawChart(30));
-document.getElementById("6month-btn").addEventListener("click", () => drawChart(180));
-document.getElementById("1year-btn").addEventListener("click", () => drawChart(365));
-document.getElementById("2year-btn").addEventListener("click", () => drawChart(730));
+const btn5 = document.getElementById("5day-btn");
+btn5.addEventListener("click", () => {
+  prevRange.classList.remove("active");
+  btn5.classList.add("active");
+  prevRange = btn5;
+  drawChart(5)
+});
 
-document.getElementById("btc").addEventListener("click", () => {
+const btn30 = document.getElementById("30day-btn")
+btn30.addEventListener("click", () => {
+  prevRange.classList.remove("active");
+  btn30.classList.add("active");
+  prevRange = btn30
+  drawChart(30)
+});
+
+const btn180 = document.getElementById("6month-btn")
+btn180.addEventListener("click", () => {
+  prevRange.classList.remove("active");
+  btn180.classList.add("active");
+  prevRange = btn180;
+  drawChart(180)
+});
+
+const btn365 = document.getElementById("1year-btn")
+btn365.addEventListener("click", () => {
+  prevRange.classList.remove("active");
+  btn365.classList.add("active");
+  prevRange = btn365;
+  drawChart(365)
+});
+
+const btn730 = document.getElementById("2year-btn")
+btn730.addEventListener("click", () => {
+  prevRange.classList.remove("active");
+  btn730.classList.add("active");
+  prevRange = btn730;
+  drawChart(730)
+});
+let prevRange = btn180;
+prevRange.classList.add("active");
+
+const btc = document.getElementById("btc");
+btc.addEventListener("click", () => {
+  prevCrypto.classList.remove("active");
+  btc.classList.add("active");
+  prevCrypto = btc;
   crypto = "BTC";
   data = [];
   info(crypto);
-})
-document.getElementById("eth").addEventListener("click", () => {
+});
+const eth = document.getElementById("eth");
+eth.addEventListener("click", () => {
+  prevCrypto.classList.remove("active");
+  eth.classList.add("active");
+  prevCrypto = eth;
   crypto = "ETH";
   data = [];
   info(crypto);
-})
-document.getElementById("doge").addEventListener("click", () => {
-  crypto = "DOGE";
+});
+const xrp = document.getElementById("xrp");
+xrp.addEventListener("click", () => {
+  prevCrypto.classList.remove("active");
+  btc.classList.add("active");
+  prevCrypto = btc;
+  crypto = "XRP";
   data = [];
   info(crypto);
-})
-document.getElementById("terra").addEventListener("click", () => {
+});
+const terra = document.getElementById("terra");
+terra.addEventListener("click", () => {
+  prevCrypto.classList.remove("active");
+  terra.classList.add("active");
+  prevCrypto = terra;
   crypto = "LUNA";
   data = [];
   info(crypto);
-})
-document.getElementById("polka").addEventListener("click", () => {
+});
+const polka = document.getElementById("polka");
+polka.addEventListener("click", () => {
+  prevCrypto.classList.remove("active");
+  polka.classList.add("active");
+  prevCrypto = polka;
   crypto = "DOT";
   data = [];
   info(crypto);
-})
+});
+let prevCrypto = btc;
+btc.classList.add("active");
