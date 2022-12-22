@@ -61,7 +61,8 @@ const filter = async function(i){
 //setting info values
 const setValues = async function(i){
   let arr = await filter(i);
-  document.querySelector(".graph").innerHTML = "";
+  let graph = document.querySelector(".graph");
+  graph.innerHTML = "";
   //reading and setting info
   let max = -1 / 0;
   let min = 1 / 0;
@@ -69,6 +70,16 @@ const setValues = async function(i){
     let temp = +arr[i][1];
     if(temp > max) max = temp;
     if(temp < min) min = temp;
+  }
+  if(arr[0] === undefined){
+    const para = document.createElement("p");
+    para.classList.add("error");
+    const node = document.createTextNode("Too many API calls in one minute. Please wait.");
+    para.appendChild(node);
+    graph.appendChild(para);
+    graph.classList.add("flex");
+  } else if(graph.classList.contains("flex")){
+    graph.classList.remove("flex");
   }
   document.getElementById("high-value").textContent =  max + " USD";
   document.getElementById("low-value").textContent =  min + " USD";
@@ -85,14 +96,13 @@ const drawChart = async function(i){
   //reding dimensions of container
   let graph = document.querySelector(".graph");
   let width = graph.offsetWidth;
-  let height = graph.offsetHeight;
-
+  let height = width / 2.2;
   //adding svg to container
   d3.select(".graph")
     .append("svg")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("preserveAspectRatio", "xMidYMid meet")
-    .classed("svg-content-responsive", true)
+    //.classed("svg-content-responsive", true)
 
   //setting x scale
   const scaleX = d3.scaleTime()

@@ -3,18 +3,23 @@
     display: flex;
     flex-direction: row;
     font-size: 30px;
-    height: 8vh;
+    min-height: 80px;
 }
 main{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 100%;
+    height: auto;
     border:1px solid grey;
     border-radius: 15px;
+    min-width: 1020px;
 }
 .graph-box{
-    height: 89vh;
     width: 85%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 .graph{
     height: 88%;
@@ -24,8 +29,10 @@ main{
     display: flex;
     flex-direction: row-reverse;
     justify-content: left;
-    margin-top: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
     margin-left: 3em;
+    min-height: 2em;
 }
 .btn{
     font-weight: 400;
@@ -36,6 +43,7 @@ main{
     border-radius: 15px;
     font-size: 25px;
     margin: 0.5em 0.5em auto 0.5em;
+    min-width: 130px;
 }
 .active, .btn:hover{
     color: white;
@@ -44,33 +52,49 @@ main{
 }
 .info-box{
     width: 100%;
-    min-width: 200px;
+    min-width: 180px;
+    max-width: 250px;
     border: 1px solid grey;
     border-radius: 15px;
-    height: 20em;
     font-size:22px;
-    margin: 10px;
-    padding-right: 15px;
 }
 .value{
     margin-left: 1em;
     font-weight: 600;
-}
-.value{
+    margin-right: 1em;
     border-bottom: 1px solid black;
-    padding-bottom: 5px;
+    margin: 0.5em 1em 0 1em;
 }
 .info{
-    margin-top: 1em;
-    margin-left: 1em;
+    margin: 1em 0 0 1em;
 }
 img{
-    width: 200px;
-    height: 200px;
+    height: auto;
+    width: 100%;
+    object-fit: contain;
 }
 .right-bar{
-    display:flex;
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 13%;
+    min-width: 180px;
+    padding-right: 7px;
+    display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+.img-container{
+    max-width: 250px;
+    margin-top: 20%;
+}
+.error{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
