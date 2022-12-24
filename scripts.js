@@ -72,6 +72,7 @@ const setValues = async function(i){
     if(temp < min) min = temp;
   }
   if(arr[0] === undefined){
+    graph.style.height = "90%";
     const para = document.createElement("p");
     para.classList.add("error");
     const node = document.createTextNode("Too many API calls in one minute. Please wait.");
@@ -98,8 +99,13 @@ const drawChart = async function(i){
   let width = graph.offsetWidth;
   let height = width / 2.2;
   let fontSize = "16px";
+  let padding = 60;
   if(width < 900)  fontSize = "14px";
-  if(width < 900)  fontSize = "12px";
+  if(width < 650){ 
+    padding = 30; 
+    height *= 1.3;
+    fontSize = "10px";
+  }
   //adding svg to container
   d3.select(".graph")
     .append("svg")
@@ -110,7 +116,7 @@ const drawChart = async function(i){
   //setting x scale
   const scaleX = d3.scaleTime()
     .domain(d3.extent(arr, (d) => d[0]))
-    .range([50, width * 0.9])
+    .range([padding - 10, width * 0.95])
   const xAxis = d3.axisBottom(scaleX)
     .ticks(5)
   d3.select("svg")
@@ -128,11 +134,11 @@ const drawChart = async function(i){
     ])
     .range([height - 25, 25]);
   const yAxis = d3.axisLeft(scaleY)
-    .ticks(8)
+    .ticks(5)
     .tickSize(-width * 0.95);
   d3.select("svg")
     .append("g")
-    .attr("transform", "translate(60, 0)")
+    .attr("transform", `translate(${padding}, 0)`)
     .style("font", `${fontSize} times`)
     .call(yAxis)
     .selectAll('.tick line').attr('opacity', 0.25);
