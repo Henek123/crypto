@@ -150,7 +150,9 @@ const drawChart = async function(i){
 
 
 //adding listeners
-document.addEventListener("DOMContentLoaded", () => info(crypto));
+document.addEventListener("DOMContentLoaded", () => {
+  info(crypto, 180)
+});
 const btn5 = document.getElementById("5day-btn");
 btn5.addEventListener("click", () => {
   activeRange(btn5);
