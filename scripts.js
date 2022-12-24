@@ -102,7 +102,7 @@ const drawChart = async function(i){
   let padding = 60;
   if(width < 900)  fontSize = "14px";
   if(width < 650){ 
-    padding = 30; 
+    padding = 40; 
     height *= 1.3;
     fontSize = "10px";
   }
