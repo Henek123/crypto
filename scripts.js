@@ -162,17 +162,6 @@ const drawChart = async function(i){
     .attr("transform", "translate(10, 0)");
 }
 
-//changing the active button
-i = 180;
-let prevRange = btn180;
-prevRange.classList.add("active");
-const activeRange = function(button){
-  prevRange.classList.remove("active");
-  button.classList.add("active");
-  prevRange = button;
-  return prevRange;
-}
-
 //adding listeners to range buttons
 document.addEventListener("DOMContentLoaded", () => {
   info(crypto, 180);
@@ -254,4 +243,15 @@ const activeCrypto = function(button){
   prevCrypto.classList.remove("active");
   button.classList.add("active");
   prevCrypto = button;
+}
+
+//changing the active button
+i = 180;
+let prevRange = btn180;
+prevRange.classList.add("active");
+const activeRange = function(button){
+  prevRange.classList.remove("active");
+  button.classList.add("active");
+  prevRange = button;
+  return prevRange;
 }
