@@ -97,6 +97,9 @@ const drawChart = async function(i){
   let graph = document.querySelector(".graph");
   let width = graph.offsetWidth;
   let height = width / 2.2;
+  let fontSize = "16px";
+  if(width < 900)  fontSize = "14px";
+  if(width < 900)  fontSize = "12px";
   //adding svg to container
   d3.select(".graph")
     .append("svg")
@@ -107,13 +110,14 @@ const drawChart = async function(i){
   //setting x scale
   const scaleX = d3.scaleTime()
     .domain(d3.extent(arr, (d) => d[0]))
-.range([50, width * 0.9])
+    .range([50, width * 0.9])
+  const xAxis = d3.axisBottom(scaleX)
+    .ticks(5)
   d3.select("svg")
     .append("g")
     .attr("transform", `translate(10, ${height - 25})`)
-    .style("font", "16px times")
-    .call(d3.axisBottom(scaleX))
-  d3.axisBottom()
+    .style("font", `${fontSize} times`)
+    .call(xAxis)
 
   //setting y scale
   const scaleY = d3
@@ -124,11 +128,12 @@ const drawChart = async function(i){
     ])
     .range([height - 25, 25]);
   const yAxis = d3.axisLeft(scaleY)
+    .ticks(8)
     .tickSize(-width * 0.95);
   d3.select("svg")
     .append("g")
     .attr("transform", "translate(60, 0)")
-    .style("font", "16px times")
+    .style("font", `${fontSize} times`)
     .call(yAxis)
     .selectAll('.tick line').attr('opacity', 0.25);
 

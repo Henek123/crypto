@@ -1,9 +1,10 @@
 .crypto-bar{
     justify-content: center;  
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    min-height: 80px;
+    padding-bottom: 1em;
 }
 main{
     display: flex;
@@ -15,7 +16,7 @@ main{
     border-radius: 15px;
 }
 .graph-box{
-    width: 85%;
+    width: 90%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -85,6 +86,9 @@ img{
     max-width: 250px;
     margin-top: 20%;
 }
+#diffrence{
+    border: none;
+}
 .error{
     text-align: center;
     font-size: 40px;
@@ -97,17 +101,22 @@ img{
     justify-content: center;
 }
 @media screen and (max-width: 1350px){
+    .graph-box{
+        width: 98%;
+    }
     main{
         flex-direction: column-reverse;
         align-items: center;
         justify-content: center;
+        margin: auto;
     }
     .right-bar{
         flex-direction: row;
         justify-content: center;
-        width: 88%;
+        width: 90%;
         max-width: unset;
         margin-top: 1em;
+        max-height: 80px;
     }
     .info-box{
         display: flex;
@@ -117,7 +126,7 @@ img{
         max-width: 1000px;
     }
     .info-box > div{
-        width: 20%;
+        width: 23%;
     }
     .img-container{
         width: 0;
@@ -141,10 +150,23 @@ img{
         font-size: 18px;
     }
 }
-@media screen and (max-width: 600px){
+@media screen and (max-width: 750px){
     .btn{
-        font-size: 12px;
+        font-size: 16px;
     }
+    .value, .info{
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 630px){
+    .btn{
+        font-size: 14px;
+    }
+    .value, .info{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 550px){
     .value, .info{
         font-size: 12px;
     }
