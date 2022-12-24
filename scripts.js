@@ -1,6 +1,6 @@
 //setting starting parameters
-let data = []
-let crypto = "BTC"
+let data = [];
+let crypto = "BTC";
 
 //calling API
 const callAPI = async function(crypto) {
@@ -11,7 +11,7 @@ const callAPI = async function(crypto) {
   } catch (error) {
       console.log(error);
   }
-}
+};
 //setting info
 const info = async function(crypto, i){
   await drawChart(i);
@@ -39,13 +39,13 @@ const info = async function(crypto, i){
       img.src = "./img/polka.png"
       break;
   }
-}
+};
 
 //filtering data
 const filter = async function(i){
   //checking for data in array
   if(data.length < 1){
-    data = [await callAPI(crypto)]
+    data = [await callAPI(crypto)];
   }
   //filtering array
   let arr = [];
@@ -110,20 +110,21 @@ const drawChart = async function(i){
   d3.select(".graph")
     .append("svg")
     .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("preserveAspectRatio", "xMidYMid meet")
-    //.classed("svg-content-responsive", true)
+    .attr("preserveAspectRatio", "xMidYMid meet");
 
   //setting x scale
   const scaleX = d3.scaleTime()
     .domain(d3.extent(arr, (d) => d[0]))
     .range([padding - 10, width * 0.95])
+
   const xAxis = d3.axisBottom(scaleX)
-    .ticks(5)
+    .ticks(5);
+
   d3.select("svg")
     .append("g")
     .attr("transform", `translate(10, ${height - 25})`)
     .style("font", `${fontSize} times`)
-    .call(xAxis)
+    .call(xAxis);
 
   //setting y scale
   const scaleY = d3
@@ -133,9 +134,11 @@ const drawChart = async function(i){
       max * 1.05
     ])
     .range([height - 25, 25]);
+
   const yAxis = d3.axisLeft(scaleY)
     .ticks(5)
     .tickSize(-width * 0.95);
+
   d3.select("svg")
     .append("g")
     .attr("transform", `translate(${padding}, 0)`)
@@ -159,45 +162,6 @@ const drawChart = async function(i){
     .attr("transform", "translate(10, 0)");
 }
 
-
-//adding listeners
-document.addEventListener("DOMContentLoaded", () => {
-  info(crypto, 180)
-});
-const btn5 = document.getElementById("5day-btn");
-btn5.addEventListener("click", () => {
-  activeRange(btn5);
-  i = 5;
-  drawChart(5)
-});
-
-const btn30 = document.getElementById("30day-btn")
-btn30.addEventListener("click", () => {
-  activeRange(btn30);
-  i = 30;
-  drawChart(30)
-});
-
-const btn180 = document.getElementById("6month-btn")
-btn180.addEventListener("click", () => {
-  activeRange(btn180);
-  i = 180;
-  drawChart(180)
-});
-
-const btn365 = document.getElementById("1year-btn")
-btn365.addEventListener("click", () => {
-  activeRange(btn365);
-  i = 365;
-  drawChart(365)
-});
-
-const btn730 = document.getElementById("2year-btn")
-btn730.addEventListener("click", () => {
-  activeRange(btn730);
-  i = 730;
-  drawChart(730)
-});
 //changing the active button
 i = 180;
 let prevRange = btn180;
@@ -209,6 +173,46 @@ const activeRange = function(button){
   return prevRange;
 }
 
+//adding listeners to range buttons
+document.addEventListener("DOMContentLoaded", () => {
+  info(crypto, 180);
+});
+const btn5 = document.getElementById("5day-btn");
+btn5.addEventListener("click", () => {
+  activeRange(btn5);
+  i = 5;
+  drawChart(i);
+});
+
+const btn30 = document.getElementById("30day-btn")
+btn30.addEventListener("click", () => {
+  activeRange(btn30);
+  i = 30;
+  drawChart(i);
+});
+
+const btn180 = document.getElementById("6month-btn")
+btn180.addEventListener("click", () => {
+  activeRange(btn180);
+  i = 180;
+  drawChart(i);
+});
+
+const btn365 = document.getElementById("1year-btn")
+btn365.addEventListener("click", () => {
+  activeRange(btn365);
+  i = 365;
+  drawChart(i);
+});
+
+const btn730 = document.getElementById("2year-btn")
+btn730.addEventListener("click", () => {
+  activeRange(btn730);
+  i = 730;
+  drawChart(i);
+});
+
+//adding listeners to crypto buttons
 const btc = document.getElementById("btc");
 btc.addEventListener("click", () => {
   activeCrypto(btc);
