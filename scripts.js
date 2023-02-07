@@ -6,7 +6,7 @@ let crypto = "BTC";
 const callAPI = async function(crypto) {
   let url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${crypto}&market=USD&apikey=KIPI8OWFYIA80UQX`;
   try {
-      let res = await fetch(url);
+      let res = await fetch(url); 
       return await res.json();
   } catch (error) {
       console.log(error);
@@ -47,6 +47,7 @@ const filter = async function(i){
   if(data.length < 1){
     data = [await callAPI(crypto)];
   }
+  console.log(data);
   //filtering array
   let arr = [];
   for (let key in data[0]["Time Series (Digital Currency Daily)"]) {
