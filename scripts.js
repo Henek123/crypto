@@ -66,13 +66,6 @@ const setValues = async function(range){
   let graph = document.querySelector(".graph");
   graph.innerHTML = "";
   //reading and setting info
-  let max = arr[0][1];
-  let min = arr[0][1];
-  for (let i = 0; i < arr.length; i++){
-    let temp = +arr[i][1];
-    if(temp > max) max = temp;
-    if(temp < min) min = temp;
-  }
   if(arr[0] === undefined){
     graph.style.height = "90%";
     const para = document.createElement("p");
@@ -84,8 +77,17 @@ const setValues = async function(range){
   } else if(graph.classList.contains("flex")){
     graph.classList.remove("flex");
   }
+  let max = arr[0][1];
+  let min = arr[0][1];
+  let current = Math.round(arr[0][1] * 100) / 100;
+  for (let i = 0; i < arr.length; i++){
+    let temp = +arr[i][1];
+    if(temp > max) max = temp;
+    if(temp < min) min = temp;
+  }
   document.getElementById("high-value").textContent =  max + " USD";
   document.getElementById("low-value").textContent =  min + " USD";
+  document.getElementById("current-value").textContent = current + " USD";
   document.getElementById("diffrence").textContent = Math.round(((arr[0][1]- arr[arr.length - 1][1])/ arr[0][1])* 10000) / 100 + "%";
   return [arr, min, max];
 }
