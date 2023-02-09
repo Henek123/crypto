@@ -1,6 +1,7 @@
 //setting starting parameters
 let data = [];
 let crypto = "BTC";
+let range = 180;
 
 //calling API
 const callAPI = async function(crypto) {
@@ -13,8 +14,8 @@ const callAPI = async function(crypto) {
   }
 };
 //setting info
-const info = async function(crypto, i){
-  await drawChart(i);
+const info = async function(crypto, range){
+  await drawChart(range);
   const img = document.getElementById("logo");
   const name = document.getElementById("name");
   switch(crypto){
@@ -41,17 +42,17 @@ const info = async function(crypto, i){
   }
 };
 
-//filtering data
-const filter = async function(i){
+//setRangeing data
+const setRange = async function(range){
   //checking for data in array
   if(data.length < 1){
     data = [await callAPI(crypto)];
   }
-  console.log(data);
-  //filtering array
+  //setRangeing array
   let arr = [];
+  let i = range;
   for (let key in data[0]["Time Series (Digital Currency Daily)"]) {
-    if(i < 1) break;
+    if(i <= 0) break;
     let myDate = new Date(key);
     arr.push([myDate, data[0]["Time Series (Digital Currency Daily)"][`${key}`]["1a. open (USD)"],]);
     i--;
@@ -60,13 +61,13 @@ const filter = async function(i){
 }
 
 //setting info values
-const setValues = async function(i){
-  let arr = await filter(i);
+const setValues = async function(range){
+  let arr = await setRange(range);
   let graph = document.querySelector(".graph");
   graph.innerHTML = "";
   //reading and setting info
-  let max = -1 / 0;
-  let min = 1 / 0;
+  let max = arr[0][1];
+  let min = arr[0][1];
   for (let i = 0; i < arr.length; i++){
     let temp = +arr[i][1];
     if(temp > max) max = temp;
@@ -90,11 +91,12 @@ const setValues = async function(i){
 }
 
 //drawing chart
-const drawChart = async function(i){
-  let array = await setValues(i);
+const drawChart = async function(range){
+  let array = await setValues(range);
   let arr = array[0];
   let min = array[1];
   let max = array[2];
+  console.log(arr, min, max);
   //reding dimensions of container
   let graph = document.querySelector(".graph");
   let width = graph.offsetWidth;
@@ -170,36 +172,36 @@ document.addEventListener("DOMContentLoaded", () => {
 const btn5 = document.getElementById("5day-btn");
 btn5.addEventListener("click", () => {
   activeRange(btn5);
-  i = 5;
-  drawChart(i);
+  range = 5;
+  drawChart(range);
 });
 
 const btn30 = document.getElementById("30day-btn")
 btn30.addEventListener("click", () => {
   activeRange(btn30);
-  i = 30;
-  drawChart(i);
+  range = 30;
+  drawChart(range);
 });
 
 const btn180 = document.getElementById("6month-btn")
 btn180.addEventListener("click", () => {
   activeRange(btn180);
-  i = 180;
-  drawChart(i);
+  range = 180;
+  drawChart(range);
 });
 
 const btn365 = document.getElementById("1year-btn")
 btn365.addEventListener("click", () => {
   activeRange(btn365);
-  i = 365;
-  drawChart(i);
+  range = 365;
+  drawChart(range);
 });
 
 const btn730 = document.getElementById("2year-btn")
 btn730.addEventListener("click", () => {
   activeRange(btn730);
-  i = 730;
-  drawChart(i);
+  range = 730;
+  drawChart(range);
 });
 
 //adding listeners to crypto buttons
@@ -208,35 +210,35 @@ btc.addEventListener("click", () => {
   activeCrypto(btc);
   crypto = "BTC";
   data = [];
-  info(crypto, i);
+  info(crypto, range);
 });
 const eth = document.getElementById("eth");
 eth.addEventListener("click", () => {
   activeCrypto(eth);
   crypto = "ETH";
   data = [];
-  info(crypto, i);
+  info(crypto, range);
 });
 const xrp = document.getElementById("xrp");
 xrp.addEventListener("click", () => {
   activeCrypto(xrp);
   crypto = "XRP";
   data = [];
-  info(crypto, i);
+  info(crypto, range);
 });
 const terra = document.getElementById("terra");
 terra.addEventListener("click", () => {
   activeCrypto(terra);
   crypto = "LUNA";
   data = [];
-  info(crypto, i);
+  info(crypto, range);
 });
 const polka = document.getElementById("polka");
 polka.addEventListener("click", () => {
   activeCrypto(polka);
   crypto = "DOT";
   data = [];
-  info(crypto, i);
+  info(crypto, range);
 });
 let prevCrypto = btc;
 btc.classList.add("active");
@@ -247,7 +249,6 @@ const activeCrypto = function(button){
 }
 
 //changing the active button
-i = 180;
 let prevRange = btn180;
 prevRange.classList.add("active");
 const activeRange = function(button){
