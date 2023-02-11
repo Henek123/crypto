@@ -167,10 +167,6 @@ const drawChart = async function(range){
         .y((d) => scaleY(d[1]))
     )
     .attr("transform", "translate(10, 0)");
-  //finding closest x index to the mouse
-  let bisect = d3.bisector((d) => {
-    return d.x;
-  }).left
 
   //creating following circle
   let focus = d3.select("svg")
