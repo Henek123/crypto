@@ -98,7 +98,9 @@ const drawChart = async function(range){
   let arr = array[0];
   let min = array[1];
   let max = array[2];
-  console.log(arr, min, max);
+  // let yAccessor = (d) => d[1];
+  // let dateParser = d3.timeParse("%d/%m/%Y");
+  // let xAccessor = (d) => dateParser(d[0]);
   //reding dimensions of container
   let graph = document.querySelector(".graph");
   let width = graph.offsetWidth;
@@ -165,6 +167,75 @@ const drawChart = async function(range){
         .y((d) => scaleY(d[1]))
     )
     .attr("transform", "translate(10, 0)");
+  //finding closest x index to the mouse
+  let bisect = d3.bisector((d) => {
+    return d.x;
+  }).left
+
+  //creating following circle
+  let focus = d3.select("svg")
+    .append("g")
+    .append("circle")
+    .style("fill", "none")
+    .attr("stroke", "black")
+    .attr('r', 8.5)
+    .style("opacity", 0);
+
+  //creating following text
+  let focusText = d3.select("svg")
+    .append("g")
+    .append("text")
+    .style("opacity", 0)
+    .attr("text-anchor", "left")
+    .attr("aligment-baseline", "middle");
+
+  //create rectangle recovering mouse coordinates
+  d3.select("svg")
+  .append('rect')
+  .style("fill", "none")
+  .style("pointer-events", "all")
+  .attr('width', width)
+  .attr('height', height)
+  .on('mouseover', mouseover)
+  .on('mousemove', mousemove)
+  .on('mouseout', mouseout);
+
+  function mouseover() {
+    focus.style("opacity", 1)
+    focusText.style("opacity",1)
+  }
+
+  function mouseout() {
+    focus.style("opacity", 0)
+    focusText.style("opacity", 0)
+  }
+  function mousemove() {
+    let mousePosition = d3.pointer(event, this);
+    let hoveredDate= scaleX.invert(mousePosition[0]);
+    let date = [];
+    for(let i = 0; i < arr.length; i++){
+      let temp = arr[i][0];
+      date.push(temp);
+    }
+    date.sort((a, b) => {
+      return a - b;
+    });
+    let index = d3.bisectLeft(date, hoveredDate)
+    selectedData = arr[range - index]
+    hoveredDate = hoveredDate.toISOString()
+    hoveredDate = hoveredDate.split("");
+    hoveredDate.splice(10);
+    hoveredDate = hoveredDate.join("");
+    focus
+      .attr("cx", scaleX(selectedData[0]) + 10)
+      .attr("cy", scaleY(selectedData[1]))
+    focusText
+      .html(hoveredDate + "  -  " + selectedData[1] + "$")
+      .style("font", `${fontSize} times`)
+      .style("font-weight", 600)
+      .attr("x", scaleX(selectedData[0])+20)
+      .attr("y", scaleY(selectedData[1]))
+    }
 }
 
 //adding listeners to range buttons
